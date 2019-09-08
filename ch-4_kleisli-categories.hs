@@ -11,8 +11,8 @@ class (Object o, Morphism m) => Category o m cat where
 
 data Result a = N | J a
 
-type Object a = a
-type Morphism a b = a -> Result b
+type FooObject a = a
+type FooMorphism a b = a -> Result b
 
 id :: Result a
 id = N
