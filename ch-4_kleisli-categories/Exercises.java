@@ -12,6 +12,20 @@ public class Exercises {
         public A value() { return _value; }
     }
 
+    static <A> Optional<A> identity(A a) {
+        return new Optional(a);
+    }
+
+    static <A, B, C> Function<A, Optional<C>> compose(
+        Function<B, Optional<C>> f,
+        Function<A, Optional<B>> g) {
+        return (a) -> {
+            Optional<B> b = g.apply(a);
+            if (!b.isValid()) return new Optional<C>();
+            else return f.apply(b.value());
+        };
+    }
+
     static Optional<Double> safeRoot(Double x) {
         if (x >= 0) return new Optional(Math.sqrt(x));
         else return new Optional();
@@ -20,15 +34,6 @@ public class Exercises {
     static Optional<Double> safeReciprocal(Double x) {
         if (x != 0) return new Optional(1/x);
         else return new Optional();
-    }
-
-    static <A, B, C> Function<A, Optional<C>> compose(Function<B, Optional<C>> f,
-                                               Function<A, Optional<B>> g) {
-        return (a) -> {
-            Optional<B> b = g.apply(a);
-            if (!b.isValid()) return new Optional<C>();
-            else return f.apply(b.value());
-        };
     }
 
     static <A> void printOptional(String s, Optional<A> a) {
